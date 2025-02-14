@@ -1,118 +1,206 @@
-Task 1:
-..........................
-Next.js API with JWT Authentication & MongoDB
+# Task 1 and 2 Combined:
 
-This project is a simple API built using Next.js (App Router) with TypeScript, Mongoose (MongoDB), and JWT authentication.
+# Next.js API with JWT Authentication, Webhooks & MongoDB
 
-Features
+This project is a simple API built using **Next.js (App Router)** with **TypeScript**, **Mongoose (MongoDB)**, **JWT authentication**, and **Webhook processing**.
 
-✅ User Management API
+## Features
 
-GET /api/users - Fetch all users (Protected)
+✅ **User Management API**
 
-POST /api/users - Add a new user
+- `GET /api/users` - Fetch all users (Protected)
+- `POST /api/users` - Add a new user
+- `GET /api/users/:id` - Fetch a single user by ID (Protected)
 
-GET /api/users/:id - Fetch a single user by ID (Protected)
+✅ **Authentication**
 
-✅ Authentication
+- `POST /api/auth/login` - Authenticate and get a JWT token
+- Middleware to protect routes
 
-POST /api/auth/login - Authenticate and get a JWT token
+✅ **Webhook Implementation**
 
-Middleware to protect routes
+- `POST /api/webhook` - Process incoming webhooks with signature verification
 
-🚀 Getting Started
+---
 
-1️⃣ Clone the Repository
+## 🚀 Getting Started
 
+### 1️⃣ Clone the Repository
+
+```sh
 git clone <repository_link>
 cd <repository_name>
+```
 
-2️⃣ Install Dependencies
+### 2️⃣ Install Dependencies
 
+```sh
 npm install
+```
 
-3️⃣ Set Up Environment Variables
+### 3️⃣ Set Up Environment Variables
 
-Create a .env.local file in the root directory and add the following:
+Create a `.env.local` file in the root directory and add the following:
 
+```env
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+WEBHOOK_SECRET=your_webhook_secret
+```
 
-4️⃣ Run the Development Server
+### 4️⃣ Run the Development Server
 
+```sh
 npm run dev
+```
 
-The API will be available at http://localhost:3000/api/users
+The API will be available at `http://localhost:3000/api/users`
 
-📌 API Endpoints
+---
 
-🔹 User Management
+## 📌 API Endpoints
 
-1️⃣ Create a New User
+### **🔹 User Management**
 
+#### **1️⃣ Create a New User**
+
+```http
 POST /api/users
+```
 
-Body:
+**Body:**
 
+```json
 {
-"name": "John Doe",
-"email": "john@example.com",
-"password": "123456"
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "123456"
 }
+```
 
-2️⃣ Get All Users (Protected)
+#### **2️⃣ Get All Users (Protected)**
 
+```http
 GET /api/users
+```
 
-Headers:
+**Headers:**
 
+```json
 {
-"Authorization": "Bearer YOUR_JWT_TOKEN"
+  "Authorization": "Bearer YOUR_JWT_TOKEN"
 }
+```
 
-3️⃣ Get User by ID (Protected)
+#### **3️⃣ Get User by ID (Protected)**
 
+```http
 GET /api/users/{userId}
+```
 
-🔹 Authentication
+---
 
-1️⃣ Login
+### **🔹 Authentication**
 
+#### **1️⃣ Login**
+
+```http
 POST /api/auth/login
+```
 
-Body:
+**Body:**
 
+```json
 {
-"email": "john@example.com",
-"password": "123456"
+  "email": "john@example.com",
+  "password": "123456"
 }
+```
 
-Response:
+**Response:**
 
+```json
 {
-"token": "your_generated_jwt_token"
+  "token": "your_generated_jwt_token"
 }
+```
 
-Use this token in the Authorization header to access protected routes.
+Use this token in the `Authorization` header to access protected routes.
 
-🛠 Technologies Used
+---
 
-Next.js 14 (App Router)
+### **🔹 Webhook Implementation**
 
-TypeScript
+#### **1️⃣ Process Webhook Request**
 
-MongoDB & Mongoose
+```http
+POST /api/webhook
+```
 
-JWT Authentication
+**Headers:**
 
-Bcrypt for Password Hashing
+```json
+// node generatedSignature.js ; run this command for generatedSignature
+{
+  "x-signature": "generated_signature"
+}
+```
 
-📜 License
+**Body:**
 
-This project is licensed under the MIT License.
+```json
+{
+  "eventType": "user.created",
+  "data": {
+    "email": "john@example.com"
+  }
+}
+```
 
-📝 Notes
+**Response:**
 
-Ensure MongoDB is running before starting the server.
+1. success response
 
-Use Postman or cURL to test API routes.
+```json
+{
+  "success": true,
+  "message": "Received"
+}
+```
+
+2. Failed response
+
+```json
+{
+  "success": false,
+  "message": "Invalid signature"
+}
+```
+
+---
+
+## 🛠 Technologies Used
+
+- **Next.js 15 (App Router)**
+- **TypeScript**
+- **MongoDB & Mongoose**
+- **JWT Authentication**
+- **Bcrypt for Password Hashing**
+- **Webhook Signature Verification**
+- **File Storage (db.json)**
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 📝 Notes
+
+- Ensure MongoDB is running before starting the server.
+- Use Postman or cURL to test API routes.
+- Webhook signatures should be verified using `WEBHOOK_SECRET`.
+
+---

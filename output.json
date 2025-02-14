@@ -1,0 +1,1 @@
+"{\n  \"eventType\": \"user.created\",\n  \"data\": {\n    \"email\": \"john@example.com\"\n  }\n}"

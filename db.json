@@ -1,0 +1,16 @@
+[
+  {
+    "eventType": "user.created",
+    "data": {
+      "email": "john@example.com",
+      "userId": "baad7184-1047-4537-a1a8-ae25a2a7d9df"
+    }
+  },
+  {
+    "eventType": "user.created",
+    "data": {
+      "email": "mdimran@example.com",
+      "userId": "ec50d5ae-bf09-4742-ac96-3ade3bd6e2a3"
+    }
+  }
+]
